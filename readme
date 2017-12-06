@@ -1,0 +1,18 @@
+problem breakdown:
+    1. 数据评估
+        找出预测数据与真实数据之间的偏差，想办法校正，相当于得到一个转换函数，最终将forecast data输入，得到measure test data用于路径规划
+    2. 路径规划
+        路径规划算法，环境非static（update per hour）
+
+idea and todolists：
+    data analyse
+        (DONE)# 评估10个predict model的准确率，去除其中N个表现差的
+        # 平均预测率不能完全体现模型性能，似乎可以从图形上来判断，但是标准？
+        # 评估每个点在所有时间内的平均安全（危险）概率，得到一副安全图。路径规划时结合考虑
+        # 找出forecast data和measure data之间的bias以及其path(如线性等等)，想办法校正
+        # 找出模型最容易犯错的区域，人工分析错误pattern
+    path planning
+        # 常见的路径规划算法 A*
+        # 结合trajectory optimazation, 尝试是否可以与reinforcement learning结合
+        # 根据data analyse的结果，人工加一些规则（有可能过拟test set）
+
