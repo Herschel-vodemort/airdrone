@@ -3,7 +3,7 @@ from collections import deque
 
 class AStar:
     def distBetween(self, current, neighbor):
-        pass
+        return abs(current[0] - neighbor[0]) + abs(current[1] - neighbor[1])
 
     def heuristicEstimate(self, start, goal):
         pass

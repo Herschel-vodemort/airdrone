@@ -78,10 +78,10 @@ class DayMap(object):
     """
     提取某一天的全部时间天气map
     """
-    def __init__(self, day_id, data_set, danger_bias=0, model_id=None, training_data_type=True):
+    def __init__(self, day_id, data_set, danger_bias=0, model_id=None, testing_data_set=False):
         self.hour_map = {}
         # data_set = load_data_from_csv(1)
-        if not training_data_type:
+        if testing_data_set:
             day_id += 5
         for hour_iter in range(3, 21):
             self.hour_map[str(hour_iter)] = get_hour_wind_map(

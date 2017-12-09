@@ -50,15 +50,31 @@ def generate_and_map_day(map_day):
     map_hour_init = map_day.hour_map['3']
     for hour_iter in range(4, 21):
         map_hour_init = np.logical_and(map_hour_init, map_day.hour_map[str(hour_iter)])*1
-    plt.imshow(map_hour_init*1, 'gray')
-    plt.show()
+    return map_hour_init*75
 
 
-def city_location_visulization():
+def city_location_visulization(wind_map):
+    city_list = get_city_list()
+    map_value = 256
+    i = 0
+    for item in city_list:
+        x, y = item
+        if i == 0:
+            map_value = 256
+        else:
+            map_value = 125
+        wind_map[x-5:x+5, y-5:y+5] = map_value
+        i += 1
+    return wind_map
 
 
 if __name__ == '__main__':
     data_set = load_data_from_csv(2)
     for day_iter in range(1, 6):
-        map_day = DayMap(data_set=data_set, day_id=day_iter, model_id=1)
-        generate_and_map_day(map_day)
+        map_day = DayMap(data_set=data_set, day_id=day_iter, model_id=1, training_data_type=False)
+        wind_map = generate_and_map_day(map_day)
+        wind_map = city_location_visulization(wind_map)
+        plt.imsave('mean_map_with_cities_day_{}'.format(day_iter), wind_map)
+        plt.imshow(wind_map, 'gray')
+        plt.title('map of day:{}'.format(day_iter))
+        plt.show()

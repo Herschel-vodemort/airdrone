@@ -7,6 +7,21 @@ from multiprocessing import Pool
 import matplotlib.pyplot as plt
 
 
+class Config(object):
+    data_set_index = 2
+    model_id = 1
+
+    if data_set_index == 1:
+        model_id = None
+    if data_set_index == 2:
+        testing = True
+    else:
+        testing = False
+
+
+config = Config
+
+
 def visualization_path_from_result():
     """
     将最终生成的路径可视化
@@ -48,6 +63,15 @@ def visualization_path_from_result():
             plt.show()
 
 
+def animation_trajectory(csv_file, map_day):
+    """
+    animate the process of generating path
+    :param csv_file:
+    :param map_day:
+    :return:
+    """
+
+
 def result_evaluator(verbose=True):
     """
     将生成的path csv文件中的路径与真实天气进行对比，计算最终得分
@@ -58,10 +82,10 @@ def result_evaluator(verbose=True):
     score = 0
     crash_sum = 0
     # measure_data = load_data_from_csv(1)
-    measure_data = load_data_from_csv(2)
+    measure_data = load_data_from_csv(config.data_set_index)
     result_dir_head = '/home/v5/pycharm_projects/airdrone/data/result/'
     for day_iter in range(1, 6):
-        map_day = DayMap(data_set=measure_data, day_id=day_iter, model_id=1, training_data_type=False)
+        map_day = DayMap(data_set=measure_data, day_id=day_iter, model_id=config.model_id, testing_data_set=config.testing)
         result_dir = result_dir_head + 'result_day_{}.csv'.format(day_iter)
         day_result = pd.read_csv(result_dir)
         for city_iter in range(1, 11):

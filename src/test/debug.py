@@ -1,9 +1,25 @@
-import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
-df = pd.DataFrame(np.random.randn(6,4))
-df = pd.DataFrame(data=None, columns=['CityId', 'Day', 'Hour', 'x', 'y'])
-df.loc[0] = [1,1,1,1,1]
-df.loc[1] = [1,1,1,1,1]
-print df.index
-print df
+fig = plt.figure()
+
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+x = np.linspace(0, 2 * np.pi, 120)
+y = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
+
+# im = plt.imshow(f(x, y), animated=True)
+
+
+def updatefig(*args):
+    global x, y
+    x += np.pi / 15.
+    y += np.pi / 20.
+    # im.set_array(f(x, y))
+    return plt.imshow(f(x, y), animated=True),
+
+ani = animation.FuncAnimation(fig, updatefig, interval=200, blit=True)
+plt.show()
